@@ -1,0 +1,142 @@
+package com.model.mapping.service;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import com.model.dto.PageResponseDto;
+import com.model.dto.StudentDto;
+import com.model.entity.Address;
+import com.model.entity.Course;
+import com.model.entity.Student;
+import com.model.repository.CourseRepository;
+import com.model.repository.StudentRepository;
+
+@Service
+public class StudentServiceImpl implements StudentService {
+
+	@Autowired
+	private StudentRepository studentRepo;
+
+	@Autowired
+	private CourseRepository courseRepo;
+
+	@Override
+	public Student addStudent(Student student) {
+
+		return studentRepo.save(student);
+	}
+
+	private StudentDto toStudentDtoMapper(Student student) {
+
+		StudentDto dto = new StudentDto();
+		dto.setAge(student.getAge());
+		dto.setName(student.getName());
+		dto.setRollnumber(student.getRollnumber());
+		return dto;
+
+	}
+
+	private Student toStudentMapper(StudentDto studentDto) {
+
+		Student student = new Student();
+		student.setAge(studentDto.getAge());
+		student.setName(studentDto.getName());
+		if (studentDto.getRollnumber() > 0)
+			student.setRollnumber(studentDto.getRollnumber());
+
+		return student;
+
+	}
+
+//	@Override
+//	public PageResponseDto getAllStudents(int pageSize, int pageNumber) {
+//
+//		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+//		Page<Student> studentPage = studentRepo.findAll(pageable);
+//		PageResponseDto studentPageDto = new PageResponseDto();
+//		studentPageDto.setTotalPages(studentPage.getTotalPages());
+//		studentPageDto.setTotalElements(studentPage.getTotalElements());
+//		studentPageDto.setSize(studentPage.getSize());
+//		studentPageDto.setContent(studentPage.getContent());
+//		return studentPageDto;
+//	}
+
+	@Override
+	public Address getAddressByRollnumber(int rollnumber) {
+		Student student = studentRepo.findById(rollnumber).orElseThrow(() -> new RuntimeException("Student not found"));
+		return student.getAddress();
+	}
+
+	@Override
+	public Address updateAddress(int rollnumber, Address newAddress) {
+		Student student = studentRepo.findById(rollnumber).orElseThrow(() -> new RuntimeException("Student not found"));
+		student.setAddress(newAddress);
+		studentRepo.save(student);
+		return newAddress;
+	}
+
+	@Override
+	public StudentDto getStudentByRollNumber(int rollnumber) {
+		Student student = studentRepo.findById(rollnumber).orElseThrow(() -> new RuntimeException("Student not found"));
+		return toStudentDtoMapper(student);
+	}
+
+	@Override
+	public PageResponseDto<StudentDto> getAllStudents(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+		Page<Student> studentPage = studentRepo.findAll(pageable);
+
+		PageResponseDto<StudentDto> pageResponseDto = new PageResponseDto();
+
+		Page<StudentDto> studentDtoPage = studentPage.map(this::toStudentDtoMapper);
+
+		pageResponseDto.setPageNumber(studentDtoPage.getNumber());
+		pageResponseDto.setContent(studentDtoPage.getContent());
+		pageResponseDto.setPageSize(studentDtoPage.getSize());
+
+		return pageResponseDto;
+
+	}
+
+	@Override
+	public StudentDto assignCourses(int rollnumber, List<Integer> courseIds) {
+
+		Student dbStudent = toStudentMapper(getStudentByRollNumber(rollnumber));
+
+		Set<Course> existingCourses = dbStudent.getCourses();
+
+		if (existingCourses == null)
+			existingCourses = new HashSet<>();
+
+		Set<Course> coursesToAdd = new HashSet<>();
+
+		courseIds.forEach((id) -> {
+
+			Course course = courseRepo.findById(id).orElseThrow(() -> new NullPointerException("course not found"));
+			List<Student> students = course.getStudents();
+			if (students == null)
+				students = new ArrayList<>();
+
+			students.add(dbStudent);
+			course.setStudents(students);
+			coursesToAdd.add(course);
+
+		});
+
+		existingCourses.addAll(coursesToAdd);
+		dbStudent.setCourses(existingCourses);
+		// student=studentRepo.save(student);
+
+		 Student updatedStudent = studentRepo.save(dbStudent);
+		    return toStudentDtoMapper(updatedStudent);
+	}
+
+}

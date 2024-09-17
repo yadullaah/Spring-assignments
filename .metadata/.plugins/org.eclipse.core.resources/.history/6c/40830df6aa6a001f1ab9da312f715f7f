@@ -1,0 +1,33 @@
+package com.model.service;
+
+import org.springframework.data.domain.Page;
+
+import com.model.Dto.CustomerDto;
+
+public class CustomerServiceImpl implements CustomerService {
+
+	@Override
+	public Page<CustomerDto> getAllCustomers(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomerDto addCustomer(CustomerDto customerDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomerDto updateCustomer(CustomerDto customerDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomerDto getCustomerById(int customerId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

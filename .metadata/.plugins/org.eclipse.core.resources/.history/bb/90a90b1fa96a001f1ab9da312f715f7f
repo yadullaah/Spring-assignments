@@ -1,0 +1,9 @@
+spring.application.name=14-jwt-security
+spring.datasource.url=jdbc:mysql://localhost:3306/jwtsecurity
+spring.datasource.username=root
+spring.datasource.password=Saad@2002
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.security.user.password=saad
+app.jwt-secret=BTfM9j1tzYwp0OtT2jvMaJjEn2tlwsQbn9mZEECmWR8=
+app.jwt-expiration-milliseconds=604800000

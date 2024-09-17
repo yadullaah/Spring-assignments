@@ -1,0 +1,60 @@
+package com.model.service;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+
+import com.model.Dto.TransactionDto;
+import com.model.entity.Account;
+
+public class TransactionServiceImpl implements TransactionService {
+
+	@Override
+	public Page<TransactionDto> getAllTransactions(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransactionDto addTransaction(TransactionDto transactionDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransactionDto updateTransaction(TransactionDto transactionDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransactionDto getTransactionById(int transactionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransactionDto credit(TransactionDto transactionDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransactionDto debit(TransactionDto transactionDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TransactionDto transfer(TransactionDto transactionDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TransactionDto> getTransactionByAccountNumber(Account account) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

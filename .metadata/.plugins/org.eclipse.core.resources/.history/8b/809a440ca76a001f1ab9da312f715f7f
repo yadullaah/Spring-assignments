@@ -1,0 +1,5 @@
+package com.model.errors;
+
+public class BankErrorResponse {
+
+}

@@ -1,0 +1,5 @@
+package com.model.exception;
+
+public class NegativeAmountEnteredException {
+
+}

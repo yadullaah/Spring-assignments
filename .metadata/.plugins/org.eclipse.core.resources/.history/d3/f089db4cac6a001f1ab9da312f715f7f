@@ -1,0 +1,33 @@
+package com.model.service;
+
+import org.springframework.data.domain.Page;
+
+import com.model.Dto.AccountDto;
+
+public class AccountServiceImpl implements AccountService{
+
+	@Override
+	public Page<AccountDto> getAllAccounts(int pageNumber, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AccountDto addAccount(AccountDto accountDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AccountDto updateAccount(AccountDto accountDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public AccountDto getAcountById(long accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

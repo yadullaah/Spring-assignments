@@ -1,0 +1,20 @@
+package com.model.config;
+
+import org.springframework.batch.core.JobExecutionListener;
+//import org.springframework.jdbc.core.JdbcTemplate;
+
+public class JobCompletionNotificationListener implements JobExecutionListener {
+	
+	
+
+	//private final JdbcTemplate jdbcTemplate;
+	
+	public JobCompletionNotificationListener() {
+		                              //JdbcTemplate jdbcTemplate
+		//this.jdbcTemplate = jdbcTemplate;
+	}
+	
+	
+	
+
+}
